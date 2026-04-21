@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏠 지연이네</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════ 헤더 ══════════ -->
+<header>
+  <div class="header-inner">
+    <span class="logo" onclick="showPage('home')">🏠 지연이네</span>
+    <nav>
+      <button onclick="showPage('workout')"   id="tab-workout">🏋️ 운동일지</button>
+      <button onclick="showPage('challenge')" id="tab-challenge">🏆 챌린지</button>
+      <button onclick="showPage('som')"       id="tab-som">🐩 솜</button>
+      <button onclick="showPage('diary')"     id="tab-diary">📝 요즘의 나</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ══════════ HOME ══════════ -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-title">🏠 지연이네</div>
+    <p class="hero-sub">나의 운동, 챌린지, 솜이, 그리고 일상을<br>기록하고 지인들과 나누는 개인 홈페이지</p>
+    <div class="hero-dots"><span></span><span></span><span></span><span></span><span></span></div>
+  </section>
+
+  <div class="menu-grid">
+    <div class="menu-card" onclick="showPage('workout')">
+      <div class="emoji">🏋️</div>
+      <h3>운동일지</h3>
+      <p>크로스핏 WOD &amp; 나의 기록</p>
+    </div>
+    <div class="menu-card" onclick="showPage('challenge')">
+      <div class="emoji">🏆</div>
+      <h3>챌린지</h3>
+      <p>런닝·버피·다이어트 달성 현황</p>
+    </div>
+    <div class="menu-card" onclick="showPage('som')">
+      <div class="emoji">🐩</div>
+      <h3>솜</h3>
+      <p>솜이의 건강·미용·성장일지</p>
+    </div>
+    <div class="menu-card" onclick="showPage('diary')">
+      <div class="emoji">📝</div>
+      <h3>요즘의 나</h3>
+      <p>나의 소소한 일상 기록</p>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <h3>💌 연락하기</h3>
+    <a class="contact-link" href="https://www.instagram.com/jyeon0418" target="_blank">
+      <span>📸</span> Instagram @jyeon0418
+    </a>
+  </div>
+</div>
+
+<!-- ══════════ 운동일지 ══════════ -->
+<div id="page-workout" class="page">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h2>🏋️ 운동일지</h2>
+      <p>크로스핏 매일의 운동 내용과 나의 기록을 정리하는 공간</p>
+    </div>
+
+    <div class="cal-nav">
+      <button onclick="prevMonthWorkout()">◀</button>
+      <span id="cal-label-workout"></span>
+      <button onclick="nextMonthWorkout()">▶</button>
+    </div>
+    <div class="calendar">
+      <div class="cal-grid" id="cal-header-workout"></div>
+      <div class="cal-grid" id="cal-body-workout"></div>
+    </div>
+
+    <div id="workout-detail-area"></div>
+
+    <h3 style="font-size:1rem;font-weight:800;color:var(--text-dark);margin:28px 0 14px;">
+      📋 이달의 운동 목록
+    </h3>
+    <div id="workout-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ 챌린지 ══════════ -->
+<div id="page-challenge" class="page">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h2>🏆 챌린지</h2>
+      <p>모든 챌린지를 하나의 캘린더에서 한눈에 확인해요</p>
+    </div>
+
+    <!-- 챌린지 종류 카드 -->
+    <div id="challenge-types" class="ct-list"></div>
+
+    <!-- 통합 캘린더 -->
+    <div class="cal-nav" style="margin-top:24px;">
+      <button onclick="prevMonth()">◀</button>
+      <span id="cal-label"></span>
+      <button onclick="nextMonth()">▶</button>
+    </div>
+    <div class="calendar">
+      <div class="cal-grid" id="cal-header"></div>
+      <div class="cal-grid" id="cal-body"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 솜 ══════════ -->
+<div id="page-som" class="page">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h2>🐩 솜</h2>
+      <p>흰 푸들 솜이의 건강·미용·병원 일정 관리</p>
+    </div>
+
+    <div class="notice-bar" id="next-vaccine-bar">
+      <span><span id="notice-emoji">💉</span> <span id="notice-text">로딩 중...</span></span>
+      <button class="vaccine-edit-btn admin-only" onclick="openNoticeEdit()" title="알림 수정">✏️ 수정</button>
+    </div>
+
+    <div class="cal-nav">
+      <button onclick="prevMonthSom()">◀</button>
+      <span id="cal-label-som"></span>
+      <button onclick="nextMonthSom()">▶</button>
+    </div>
+    <div class="calendar">
+      <div class="cal-grid" id="cal-header-som"></div>
+      <div class="cal-grid" id="cal-body-som"></div>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:800;color:var(--text-dark);margin:28px 0 14px;">
+      📷 솜이 갤러리
+    </h3>
+    <div class="gallery-grid" id="som-gallery"></div>
+
+    <div class="card" id="som-comments-card" style="margin-top:8px;">
+      <div class="card-title">💬 솜이에게 응원 메시지 보내기</div>
+      <div class="comment-section">
+        <div class="comment-list" id="som-comment-list"></div>
+        <div class="som-message-form">
+          <input type="text" id="som-name-input" placeholder="이름 (선택)">
+          <div class="som-msg-row">
+            <input type="text" id="som-msg-input" placeholder="응원 메시지를 남겨주세요 🐾"
+              onkeydown="if(event.key==='Enter') submitSomMessage()">
+            <button onclick="submitSomMessage()">보내기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 요즘의 나 ══════════ -->
+<div id="page-diary" class="page">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h2>📝 요즘의 나</h2>
+      <p>나의 일상, 감정, 생각을 짧게 기록하는 공간</p>
+    </div>
+    <div id="diary-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ 뷰 모달 ══════════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div id="modal-content-area"></div>
+  </div>
+</div>
+
+<!-- ══════════ 쓰기 오버레이 ══════════ -->
+<div class="write-overlay" id="write-overlay">
+  <div class="write-modal">
+    <button class="write-close" onclick="closeWriteModal()">✕</button>
+    <div id="write-form-content"></div>
+  </div>
+</div>
+
+<!-- ══════════ 관리자 FAB ══════════ -->
+<button class="admin-fab locked" id="admin-fab" onclick="handleFab()" title="관리자"></button>
+
+<!-- ══════════ 푸터 ══════════ -->
+<footer>
+  © 2025 지연이네. All rights reserved. 🏠
+  <span style="margin-left:12px;font-size:0.75rem;">
+    <a href="#" onclick="if(isAdmin){logout();}else{handleFab();} return false;"
+       style="color:var(--text-light);text-decoration:none;">
+      [관리자]
+    </a>
+  </span>
+</footer>
+
+<!-- ══════════ 스크립트 (로드 순서 중요) ══════════ -->
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/workout.js"></script>
+<script src="js/challenge.js"></script>
+<script src="js/som.js"></script>
+<script src="js/diary.js"></script>
+
+</body>
+</html>
